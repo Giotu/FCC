@@ -1,4 +1,15 @@
 body {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin: 0;
 	font-family: "Press Start 2P", system-ui;
+}
+
+.board {
+	display: grid;
+	grid-template-columns: repeat(20, 20px);
+	grid-template-rows: repeat(20, 20px);
+	border: 2px solid black;
 }
