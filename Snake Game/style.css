@@ -13,3 +13,7 @@ body {
 	grid-template-rows: repeat(20, 20px);
 	border: 2px solid black;
 }
+
+.snake {
+	background-color: #444;
+}
