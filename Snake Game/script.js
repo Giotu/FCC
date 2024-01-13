@@ -1,8 +1,9 @@
 const board = document.querySelector(".board");
 
 const sizeBoard = 20;
-const snake = [{ x: 10, y: 10 }];
-const food = generateFood();
+let snake = [{ x: 10, y: 10 }];
+let direction = "right";
+let food = generateFood();
 
 function draw() {
 	board.innerHTML = "";
@@ -40,4 +41,29 @@ function generateFood() {
 	const y = Math.floor(Math.random() * sizeBoard + 1);
 	return { x, y };
 }
+
+function move() {
+	let head = { ...snake[0] };
+	switch (direction) {
+		case "right":
+			head.x++;
+			break;
+		case "left":
+			head.x--;
+			break;
+		case "up":
+			head.y--;
+			break;
+		case "down":
+			head.y++;
+			break;
+	}
+	snake.unshift(head);
+	if (head.x === food.x && head.y === food.y) {
+		food = generateFood();
+	} else {
+		snake.pop();
+	}
+}
+
 draw();
