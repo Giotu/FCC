@@ -1,4 +1,7 @@
 const board = document.querySelector(".board");
+const title = document.querySelector(".title");
+const score = document.querySelector(".current-score");
+const highScore = document.querySelector(".high-score");
 
 const sizeBoard = 20;
 let snake = [{ x: 10, y: 10 }];
@@ -7,11 +10,13 @@ let gameStarted = false;
 let gameInterval;
 let direction = "right";
 let food = generateFood();
+let highScoreValue = 0;
 
 function draw() {
 	board.innerHTML = "";
 	drawSnake();
 	drawFood();
+	updateScore();
 }
 
 function drawSnake() {
@@ -85,6 +90,7 @@ function move() {
 
 function startGame() {
 	gameStarted = true;
+	title.style.opacity = 0;
 	gameInterval = setInterval(() => {
 		move();
 		checkEndGame();
@@ -138,6 +144,7 @@ function checkEndGame() {
 }
 
 function resetGame() {
+	updateHighScore();
 	stopGame();
 	snake = [{ x: 10, y: 10 }];
 	snakeSpeed = 175;
@@ -148,5 +155,19 @@ function resetGame() {
 function stopGame() {
 	gameStarted = false;
 	clearInterval(gameInterval);
+	title.style.opacity = 1;
 }
+
+function updateScore() {
+	score.textContent = (snake.length - 1).toString().padStart(3, "0");
+}
+
+function updateHighScore() {
+	const currentScore = snake.length - 1;
+	if (highScoreValue < currentScore) {
+		highScoreValue = currentScore;
+	}
+	highScore.textContent = highScoreValue.toString().padStart(3, "0");
+}
+
 document.addEventListener("keydown", handler);

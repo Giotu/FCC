@@ -3,8 +3,20 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 	margin: 0;
+	background-color: #888;
 	font-family: "Press Start 2P", system-ui;
+}
+
+.title {
+	transition: all 0.5s;
+	text-align: center;
+}
+
+.scores {
+	display: flex;
+	gap: 300px;
 }
 
 .board {
