@@ -12,12 +12,18 @@ body {
 	grid-template-columns: repeat(20, 20px);
 	grid-template-rows: repeat(20, 20px);
 	border: 2px solid black;
+	background-color: #aeffbc;
 }
 
 .snake {
-	background-color: #444;
+	background-color: #369b47;
+	border: 1px solid #777;
+}
+
+.snake:first-child {
+	background-color: rgb(62, 59, 202);
 }
 
 .food {
-	background-color: red;
+	background-color: rgb(199, 4, 4);
 }

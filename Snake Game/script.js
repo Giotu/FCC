@@ -2,7 +2,7 @@ const board = document.querySelector(".board");
 
 const sizeBoard = 20;
 let snake = [{ x: 10, y: 10 }];
-let snakeSpeed = 200;
+let snakeSpeed = 175;
 let gameStarted = false;
 let direction = "right";
 let food = generateFood();
@@ -39,8 +39,18 @@ function drawFood() {
 }
 
 function generateFood() {
-	const x = Math.floor(Math.random() * sizeBoard + 1);
-	const y = Math.floor(Math.random() * sizeBoard + 1);
+	let x = Math.floor(Math.random() * sizeBoard + 1);
+	let y = Math.floor(Math.random() * sizeBoard + 1);
+	let foodInSnake = snake.find((elem) => {
+		return elem.x === x && elem.y === y;
+	});
+	while (foodInSnake) {
+		x = Math.floor(Math.random() * sizeBoard + 1);
+		y = Math.floor(Math.random() * sizeBoard + 1);
+		foodInSnake = snake.find((elem) => {
+			return elem.x === x && elem.y === y;
+		});
+	}
 	return { x, y };
 }
 
@@ -86,21 +96,27 @@ function handler(event) {
 	} else {
 		switch (event.code) {
 			case "ArrowUp":
-				direction = "up";
+				if (direction !== "down") {
+					direction = "up";
+				}
 				break;
 			case "ArrowDown":
-				direction = "down";
+				if (direction !== "up") {
+					direction = "down";
+				}
 				break;
 			case "ArrowRight":
-				direction = "right";
+				if (direction !== "left") {
+					direction = "right";
+				}
 				break;
 			case "ArrowLeft":
-				direction = "left";
+				if (direction !== "right") {
+					direction = "left";
+				}
 				break;
 		}
 	}
 }
 
 document.addEventListener("keydown", handler);
-
-draw();
