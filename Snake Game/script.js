@@ -2,6 +2,8 @@ const board = document.querySelector(".board");
 
 const sizeBoard = 20;
 let snake = [{ x: 10, y: 10 }];
+let snakeSpeed = 200;
+let gameStarted = false;
 let direction = "right";
 let food = generateFood();
 
@@ -61,9 +63,44 @@ function move() {
 	snake.unshift(head);
 	if (head.x === food.x && head.y === food.y) {
 		food = generateFood();
+		// setInterval(() => {
+		// 	move();
+		// 	draw();
+		// }, snakeSpeed);
 	} else {
 		snake.pop();
 	}
 }
+
+function startGame() {
+	gameStarted = true;
+	setInterval(() => {
+		move();
+		draw();
+	}, snakeSpeed);
+}
+
+function handler(event) {
+	if (!gameStarted && event.code === "Space") {
+		startGame();
+	} else {
+		switch (event.code) {
+			case "ArrowUp":
+				direction = "up";
+				break;
+			case "ArrowDown":
+				direction = "down";
+				break;
+			case "ArrowRight":
+				direction = "right";
+				break;
+			case "ArrowLeft":
+				direction = "left";
+				break;
+		}
+	}
+}
+
+document.addEventListener("keydown", handler);
 
 draw();
