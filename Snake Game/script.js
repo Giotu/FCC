@@ -2,8 +2,9 @@ const board = document.querySelector(".board");
 
 const sizeBoard = 20;
 let snake = [{ x: 10, y: 10 }];
-let snakeSpeed = 175;
+let snakeSpeed = 140;
 let gameStarted = false;
+let gameInterval;
 let direction = "right";
 let food = generateFood();
 
@@ -84,8 +85,9 @@ function move() {
 
 function startGame() {
 	gameStarted = true;
-	setInterval(() => {
+	gameInterval = setInterval(() => {
 		move();
+		checkEndGame();
 		draw();
 	}, snakeSpeed);
 }
@@ -119,4 +121,32 @@ function handler(event) {
 	}
 }
 
+function checkEndGame() {
+	const head = snake[0];
+	if (head.x < 1 || head.x > sizeBoard || head.y < 1 || head.y > sizeBoard) {
+		resetGame();
+	}
+	snake.forEach((elem, index) => {
+		if (snake.length > 4) {
+			if (index > 0) {
+				if (elem.x === head.x && elem.y === head.y) {
+					resetGame();
+				}
+			}
+		}
+	});
+}
+
+function resetGame() {
+	stopGame();
+	snake = [{ x: 10, y: 10 }];
+	snakeSpeed = 175;
+	direction = "right";
+	food = generateFood();
+}
+
+function stopGame() {
+	gameStarted = false;
+	clearInterval(gameInterval);
+}
 document.addEventListener("keydown", handler);
